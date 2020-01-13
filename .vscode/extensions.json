@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    "marquesmps.dockerfile-validator",
+    "ms-azuretools.vscode-docker",
+    "ms-vscode-remote.remote-containers",
+    "p1c2u.docker-compose"
+  ]
+}

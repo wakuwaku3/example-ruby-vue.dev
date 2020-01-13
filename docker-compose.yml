@@ -1,0 +1,44 @@
+version: "3"
+
+services:
+  db:
+    image: postgres:12.1-alpine
+    environment:
+      LANG: ja_JP.UTF-8
+    volumes:
+      - "example-ruby-vue.data:/var/lib/postgresql/data"
+    ports:
+      - "5432:5432"
+    tty: true
+  api:
+    build: ./api
+    environment:
+      GITHUB_USER_NAME: ${GITHUB_USER_NAME}
+      GITHUB_TOKEN: ${GITHUB_TOKEN}
+      GITHUB_EMAIL: ${GITHUB_EMAIL}
+    volumes:
+      - "example-ruby-vue.api:/repo"
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    tty: true
+    depends_on:
+      - db
+  web:
+    build: ./web
+    environment:
+      GITHUB_USER_NAME: ${GITHUB_USER_NAME}
+      GITHUB_TOKEN: ${GITHUB_TOKEN}
+      GITHUB_EMAIL: ${GITHUB_EMAIL}
+    volumes:
+      - "example-ruby-vue.web:/repo"
+    ports:
+      - "3000:3000"
+      - "3001:3001"
+    tty: true
+    depends_on:
+      - api
+volumes:
+  example-ruby-vue.data:
+  example-ruby-vue.api:
+  example-ruby-vue.web:
